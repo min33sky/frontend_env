@@ -44,6 +44,7 @@ module.exports = {
       },
     ],
   },
+  // * plugin은 번들된 결과물을 처리하는 역할
   plugins: [
     new webpack.BannerPlugin({
       banner: () => `
