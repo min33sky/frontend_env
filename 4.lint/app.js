@@ -9,5 +9,3 @@ foo(
   IShouldRefactorThis(),
   isThereSeriouslyAnotherOne(),
 );
-
-console.log('zzzz');
