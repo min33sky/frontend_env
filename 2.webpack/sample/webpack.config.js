@@ -56,6 +56,7 @@ module.exports = {
     new webpack.DefinePlugin({
       // 웹팩의 개발 환경 정보를 제공
       TWO: '1+1',
+      // 문자열로 사용하려면 JSON.stringify()를 사용
       VERSION: JSON.stringify('v.1.2.3'),
       PRODUCTION: JSON.stringify(false),
       MAX_COUNT: JSON.stringify(999),

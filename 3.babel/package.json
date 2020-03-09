@@ -1,0 +1,24 @@
+{
+  "name": "3.babel",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.7",
+    "@babel/plugin-transform-arrow-functions": "^7.8.3",
+    "@babel/plugin-transform-block-scoping": "^7.8.3",
+    "@babel/plugin-transform-strict-mode": "^7.8.3",
+    "@babel/preset-env": "^7.8.7",
+    "babel-loader": "^8.0.6",
+    "core-js": "^2.6.11",
+    "webpack": "^4.42.0",
+    "webpack-cli": "^3.3.11"
+  }
+}
