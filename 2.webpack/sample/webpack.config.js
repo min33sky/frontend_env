@@ -5,6 +5,7 @@ const childProcess = require('child_process');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const apiMocker = require('connect-api-mocker');
 
 module.exports = {
   mode: 'development',
@@ -43,6 +44,37 @@ module.exports = {
         },
       },
     ],
+  },
+  // * Webpack-dev-server 설정
+  devServer: {
+    overlay: true, // 빌드 시 에러나 경고를 브라우져 화면에 표시
+    stats: 'errors-only',
+    // before: (app, server, compiler) => {
+    //   app.get('/api/users', (req, res) => {
+    //     res.json([
+    //       {
+    //         id: 1,
+    //         name: 'Alice',
+    //       },
+    //       {
+    //         id: 2,
+    //         name: 'Bek',
+    //       },
+    //       {
+    //         id: 3,
+    //         name: 'Chris',
+    //       },
+    //     ]);
+    //   });
+    // },
+    // * 목업 API 갯수가 많다면 파일로 관리하는 것이 편리
+    before: (app, server, compiler) => {
+      app.use(apiMocker('/api', './mocks/api'));
+    },
+    // * 프론트에서 CORS 문제 해결
+    // proxy: {
+    //   '/api': 'http://localhost:API제공서버포트',
+    // },
   },
   // * plugin은 번들된 결과물을 처리하는 역할
   plugins: [
