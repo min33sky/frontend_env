@@ -6,7 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin'); // 빌드 시 css 분리
 const apiMocker = require('connect-api-mocker');
-// * 최적화 관련 모듈들
+/* 최적화 관련 모듈들 */
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin'); // css 압축
 const TerserPlugin = require('terser-webpack-plugin'); // JS 코드 난독화, debugger 구문 제거
 const CopyPlugin = require('copy-webpack-plugin'); // 파일 복사 플러그인
@@ -26,7 +26,11 @@ module.exports = {
     filename: '[name].js', // entry의 프로퍼티값이 name에 들어감
   },
 
-  // * 로더들을 등록하는 곳
+  /**********************************************************************
+   *
+   * 로더들을 등록하는 곳
+   *
+   **********************************************************************/
   module: {
     rules: [
       // {
@@ -79,12 +83,18 @@ module.exports = {
         : [],
   },
 
-  // * 빌드 과정에서 제외 (써드 파티 모듈은 이미 빌드를 거쳤기 때문에)
+  /*
+   * 빌드 과정에서 제외 (써드 파티 모듈은 이미 빌드를 거쳤기 때문에)
+   */
   externals: {
     axios: 'axios', // node_modules에서 웹팩 output 폴더에 옮기고 index.html에서 로딩한다.
   },
 
-  // * Webpack-dev-server 설정
+  /*********************************************************
+   *
+   * Webpack-dev-server 설정
+   *
+   *********************************************************/
   devServer: {
     overlay: true, // 빌드 시 에러나 경고를 브라우져 화면에 표시
     stats: 'errors-only',
@@ -114,12 +124,22 @@ module.exports = {
     // proxy: {
     //   '/api': 'http://localhost:API제공서버포트',
     // },
-    // * 핫 모듈 (전체화면 갱신이 아닌 바뀐 부분만 갱신하는 기능)
+
+    /*
+     * 핫 모듈 (전체화면 갱신이 아닌 바뀐 부분만 갱신하는 기능)
+     */
     hot: true,
   },
 
-  // * plugin은 번들된 결과물을 처리하는 역할
+  /*************************************************
+   *
+   * plugin:번들된 결과물을 처리하는 역할
+   *
+   *************************************************/
   plugins: [
+    /*
+     * 빌드 된 파일 최상단에 빌드 정보를 출력하는 플러그인
+     */
     new webpack.BannerPlugin({
       banner: () => `
       빌드 날짜: ${new Date().toLocaleString()}
@@ -128,7 +148,9 @@ module.exports = {
       `,
     }),
 
-    // * 웹팩의 개발 환경 정보를 제공
+    /*
+     * 웹팩의 개발 환경 정보를 제공
+     */
     new webpack.DefinePlugin({
       TWO: '1+1',
       // 문자열로 사용하려면 JSON.stringify()를 사용
@@ -138,7 +160,9 @@ module.exports = {
       'api.domain': JSON.stringify('http://dev.api.domain.com'),
     }),
 
-    // * HTML 파일 압축
+    /*
+     * HTML 파일 압축 및 js파일 자동 임포트
+     */
     new HtmlWebpackPlugin({
       template: './src/index.html', // 템플릿 경로를 지정
       templateParameters: {
@@ -155,10 +179,14 @@ module.exports = {
       hash: true, // 정적 파일을 불러올때 쿼리문자열에 웹팩 해쉬값을 추가한다
     }),
 
-    // * 이전 빌드를 지우고 새로 빌드
+    /*
+     * 이전 빌드를 지우고 새로 빌드
+     */
     new CleanWebpackPlugin(),
 
-    // * 파일 복사 플러그인 (써드 파티 모듈을 옮길 때 사용)
+    /*
+     * 파일 복사 플러그인 (써드 파티 모듈을 옮길 때 사용)
+     */
     new CopyPlugin([
       {
         from: './node_modules/axios/dist/axios.min.js',
@@ -166,7 +194,9 @@ module.exports = {
       },
     ]),
 
-    // css를 별도로 분리하는 플러그인 (속도 향상을 위해)
+    /*
+     * css를 별도의 파일로 분리하는 플러그인 (속도 향상을 위해)
+     */
     ...(process.env.NODE_ENV === 'production'
       ? [new MiniCssExtractPlugin({ filename: `[name].css` })]
       : []),
