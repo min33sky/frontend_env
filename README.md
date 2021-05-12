@@ -12,4 +12,4 @@
 
 ## Issue
 
-1. webpack v5부터 개발서버를 돌릴 때 webpack-dev-serveapsdfr가 아닌 webpack serve로 명령어가 바뀌었다.
+1. webpack v5부터 개발서버를 돌릴 때 webpack-dev-server가 아닌 webpack serve로 명령어가 바뀌었다.

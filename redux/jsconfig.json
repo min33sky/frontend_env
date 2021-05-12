@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "module": "commonJS",
+    "jsx": "react-jsx",
+    "target": "es2015",
+    "checkJs": true
+  }
+}
